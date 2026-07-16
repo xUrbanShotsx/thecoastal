@@ -35,7 +35,8 @@ export default function Home() {
       const w3 = m3.actualBoundingBoxLeft + m3.actualBoundingBoxRight;
 
       const total = w1 + gap + w2 + gap + w3;
-      const scale = window.innerWidth / total;
+      // 32px (px-8) each side = 64px total, matching navbar margin
+      const scale = (window.innerWidth - 64) / total;
       const fs = base * scale;
 
       el.style.setProperty("--fs", `${fs}px`);
