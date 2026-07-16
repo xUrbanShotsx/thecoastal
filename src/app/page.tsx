@@ -56,10 +56,14 @@ export default function Home() {
         className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-8 py-5"
         style={{ opacity: navOpacity, pointerEvents: navPointer }}
       >
-        {["EXPERIENCE", "ACCOMMODATION", "OUR STOREY"].map((item) => (
+        {[
+          { label: "EXPERIENCE", href: "#" },
+          { label: "ACCOMMODATION", href: "#accommodation" },
+          { label: "OUR STOREY", href: "#" },
+        ].map(({ label, href }) => (
           <a
-            key={item}
-            href="#"
+            key={label}
+            href={href}
             style={{
               fontFamily: FUTURA,
               fontWeight: 700,
@@ -69,7 +73,7 @@ export default function Home() {
               textDecoration: "none",
             }}
           >
-            {item}
+            {label}
           </a>
         ))}
       </motion.nav>
@@ -194,6 +198,7 @@ export default function Home() {
 
       {/* Four frames section */}
       <section
+        id="accommodation"
         className="h-screen w-full"
         style={{ backgroundColor: "#ffc0c0", padding: "1.25rem" }}
       >
