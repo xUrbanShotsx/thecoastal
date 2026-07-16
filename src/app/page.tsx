@@ -100,8 +100,8 @@ export default function Home() {
                   lineHeight: 1.35,
                 }}
               >
-                Designed
-                <br />with pleasure
+                DESIGNED
+                <br />WITH PLEASURE
               </p>
             </div>
 
@@ -116,8 +116,8 @@ export default function Home() {
                   lineHeight: 1.35,
                 }}
               >
-                Interiors, Objects
-                <br />& Atmospheres
+                INTERIORS, OBJECTS
+                <br />& ATMOSPHERES
               </p>
             </div>
           </motion.div>
