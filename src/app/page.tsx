@@ -21,13 +21,14 @@ export default function Home() {
       const gap = base * 0.38;
 
       ctx.font = `700 ${base}px ${FUTURA}`;
-
       const m1 = ctx.measureText("COASTAL");
       const w1 = m1.actualBoundingBoxLeft + m1.actualBoundingBoxRight;
 
+      ctx.font = `700 ${base}px 'Playfair Display', serif`;
       const m2 = ctx.measureText("X");
       const w2 = m2.actualBoundingBoxLeft + m2.actualBoundingBoxRight;
 
+      ctx.font = `700 ${base}px ${FUTURA}`;
       const m3 = ctx.measureText("BERRY");
       const w3 = m3.actualBoundingBoxLeft + m3.actualBoundingBoxRight;
 
@@ -68,11 +69,13 @@ export default function Home() {
               className="flex items-baseline whitespace-nowrap"
               style={{ gap: "var(--gap, 0.38em)", lineHeight: 1 }}
             >
-              {["COASTAL", "X", "BERRY"].map((word) => (
+              {(["COASTAL", "X", "BERRY"] as const).map((word) => (
                 <span
                   key={word}
                   style={{
-                    fontFamily: FUTURA,
+                    fontFamily: word === "X"
+                      ? "var(--font-playfair), 'Playfair Display', serif"
+                      : FUTURA,
                     fontWeight: 700,
                     fontSize: "var(--fs, 13vw)",
                     color: "#1a1916",
