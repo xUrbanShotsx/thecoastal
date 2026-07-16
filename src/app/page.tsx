@@ -194,9 +194,9 @@ export default function Home() {
       {/* Four frames section */}
       <section
         className="h-screen w-full"
-        style={{ backgroundColor: "#ffc0c0", padding: "2rem" }}
+        style={{ backgroundColor: "#ffc0c0", padding: "1.25rem" }}
       >
-        <div className="grid h-full grid-cols-4 gap-8">
+        <div className="grid h-full grid-cols-4 gap-5">
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
