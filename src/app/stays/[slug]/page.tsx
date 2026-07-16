@@ -180,9 +180,10 @@ export default async function StayPage({
         </div>
       </section>
 
-      {/* Section 2: Square photo grid */}
+      {/* Section 2: 3×3 photo grid — fits one screen */}
       <section
         style={{
+          height: "100vh",
           backgroundColor: "#ffc0c0",
           padding: "1.25rem",
         }}
@@ -191,13 +192,15 @@ export default async function StayPage({
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
+            gridTemplateRows: "repeat(3, 1fr)",
             gap: "1.25rem",
+            height: "100%",
           }}
         >
-          {stay.photos.map((photo, i) => (
+          {stay.photos.slice(0, 9).map((photo, i) => (
             <div
               key={i}
-              style={{ aspectRatio: "1 / 1", overflow: "hidden", position: "relative" }}
+              style={{ overflow: "hidden", position: "relative" }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
