@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const FUTURA = "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif";
@@ -198,12 +199,17 @@ export default function Home() {
       >
         <div className="grid h-full grid-cols-4 gap-5">
           {[
-            { n: 1, name: "The Headland House" },
-            { n: 2, name: "The Eucalypt Villa" },
-            { n: 3, name: "The Fern Villa" },
-            { n: 4, name: "The Paperbark Villa" },
-          ].map(({ n, name }) => (
-            <div key={n} className="group relative w-full h-full overflow-hidden">
+            { n: 1, name: "The Headland House", slug: "the-headland-house" },
+            { n: 2, name: "The Eucalypt Villa", slug: "the-eucalypt-villa" },
+            { n: 3, name: "The Fern Villa", slug: "the-fern-villa" },
+            { n: 4, name: "The Paperbark Villa", slug: "the-paperbark-villa" },
+          ].map(({ n, name, slug }) => (
+            <Link
+              key={n}
+              href={`/stays/${slug}`}
+              className="group relative w-full h-full overflow-hidden"
+              style={{ display: "block" }}
+            >
               {/* Image */}
               <img
                 src={`/frame${n}.png`}
@@ -227,7 +233,7 @@ export default function Home() {
                   {name}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
