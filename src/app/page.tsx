@@ -6,22 +6,41 @@ import { motion, useScroll, useTransform } from "framer-motion";
 export default function Home() {
   const { scrollY } = useScroll();
   const creamHeight = useTransform(scrollY, [0, 500], ["50vh", "0vh"]);
-  const titleRef = useRef<HTMLHeadingElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fit = () => {
-      const el = titleRef.current;
+      const el = heroRef.current;
       if (!el) return;
+
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d")!;
-      // Measure at 100px then scale to viewport width
-      const family = getComputedStyle(el).fontFamily;
-      ctx.font = `bold 100px ${family}`;
-      const metrics = ctx.measureText("COASTAL X BERRY");
-      // Use actual ink bounds for true edge-to-edge
-      const inkWidth = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
-      el.style.fontSize = `${(window.innerWidth / inkWidth) * 100}px`;
+      const base = 100;
+      const gap = base * 0.38;
+
+      // COASTAL — Cormorant Garamond italic bold
+      ctx.font = `italic 700 ${base}px 'Cormorant Garamond', serif`;
+      const m1 = ctx.measureText("COASTAL");
+      const w1 = m1.actualBoundingBoxLeft + m1.actualBoundingBoxRight;
+
+      // X — Playfair Display bold
+      ctx.font = `700 ${base}px 'Playfair Display', serif`;
+      const m2 = ctx.measureText("X");
+      const w2 = m2.actualBoundingBoxLeft + m2.actualBoundingBoxRight;
+
+      // BERRY — Cormorant Garamond italic bold
+      ctx.font = `italic 700 ${base}px 'Cormorant Garamond', serif`;
+      const m3 = ctx.measureText("BERRY");
+      const w3 = m3.actualBoundingBoxLeft + m3.actualBoundingBoxRight;
+
+      const total = w1 + gap + w2 + gap + w3;
+      const scale = window.innerWidth / total;
+      const fs = base * scale;
+
+      el.style.setProperty("--fs", `${fs}px`);
+      el.style.setProperty("--gap", `${gap * scale}px`);
     };
+
     document.fonts.ready.then(fit);
     window.addEventListener("resize", fit);
     return () => window.removeEventListener("resize", fit);
@@ -46,13 +65,44 @@ export default function Home() {
             className="absolute inset-x-0 top-0 flex items-center justify-center overflow-hidden"
             style={{ height: creamHeight, backgroundColor: "#f5f0e8" }}
           >
-            <h1
-              ref={titleRef}
-              className="whitespace-nowrap font-serif font-bold"
-              style={{ color: "#1a1916", fontSize: "13vw", lineHeight: 1 }}
+            <div
+              ref={heroRef}
+              className="flex items-baseline whitespace-nowrap"
+              style={{ gap: "var(--gap, 0.38em)", lineHeight: 1 }}
             >
-              COASTAL X BERRY
-            </h1>
+              <span
+                style={{
+                  fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
+                  fontStyle: "italic",
+                  fontWeight: 700,
+                  fontSize: "var(--fs, 13vw)",
+                  color: "#1a1916",
+                }}
+              >
+                COASTAL
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-playfair), 'Playfair Display', serif",
+                  fontWeight: 700,
+                  fontSize: "var(--fs, 13vw)",
+                  color: "#1a1916",
+                }}
+              >
+                X
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
+                  fontStyle: "italic",
+                  fontWeight: 700,
+                  fontSize: "var(--fs, 13vw)",
+                  color: "#1a1916",
+                }}
+              >
+                BERRY
+              </span>
+            </div>
           </motion.div>
 
         </div>
