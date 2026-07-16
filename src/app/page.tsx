@@ -89,6 +89,22 @@ export default function Home() {
             </div>
             </div>
 
+            {/* Subtitle — bottom-right */}
+            <div className="absolute bottom-6 right-8 text-right">
+              <p
+                style={{
+                  fontFamily: "var(--font-great-vibes), cursive",
+                  fontSize: "clamp(1.6rem, 3vw, 2.8rem)",
+                  color: "#1a1916",
+                  opacity: 0.75,
+                  lineHeight: 1.35,
+                }}
+              >
+                Designed
+                <br />with pleasure
+              </p>
+            </div>
+
             {/* Subtitle — bottom-left, just above the image */}
             <div className="absolute bottom-6 left-8">
               <p
