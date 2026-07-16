@@ -190,6 +190,22 @@ export default function Home() {
           you&rsquo;ve properly left the city behind.
         </p>
       </section>
+
+      {/* Four frames section */}
+      <section
+        className="h-screen w-full"
+        style={{ backgroundColor: "#ffc0c0", padding: "2rem" }}
+      >
+        <div className="grid h-full grid-cols-4 gap-8">
+          {[1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="w-full h-full"
+              style={{ backgroundColor: "#e8a0a0" }}
+            />
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
