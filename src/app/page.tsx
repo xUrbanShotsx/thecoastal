@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+const FUTURA = "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif";
+
 export default function Home() {
   const { scrollY } = useScroll();
   const creamHeight = useTransform(scrollY, [0, 500], ["50vh", "0vh"]);
@@ -18,18 +20,14 @@ export default function Home() {
       const base = 100;
       const gap = base * 0.38;
 
-      // COASTAL — Cormorant Garamond italic bold
-      ctx.font = `italic 700 ${base}px 'Cormorant Garamond', serif`;
+      ctx.font = `700 ${base}px ${FUTURA}`;
+
       const m1 = ctx.measureText("COASTAL");
       const w1 = m1.actualBoundingBoxLeft + m1.actualBoundingBoxRight;
 
-      // X — Playfair Display bold
-      ctx.font = `700 ${base}px 'Playfair Display', serif`;
       const m2 = ctx.measureText("X");
       const w2 = m2.actualBoundingBoxLeft + m2.actualBoundingBoxRight;
 
-      // BERRY — Cormorant Garamond italic bold
-      ctx.font = `italic 700 ${base}px 'Cormorant Garamond', serif`;
       const m3 = ctx.measureText("BERRY");
       const w3 = m3.actualBoundingBoxLeft + m3.actualBoundingBoxRight;
 
@@ -70,38 +68,19 @@ export default function Home() {
               className="flex items-baseline whitespace-nowrap"
               style={{ gap: "var(--gap, 0.38em)", lineHeight: 1 }}
             >
-              <span
-                style={{
-                  fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                  fontStyle: "italic",
-                  fontWeight: 700,
-                  fontSize: "var(--fs, 13vw)",
-                  color: "#1a1916",
-                }}
-              >
-                COASTAL
-              </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-playfair), 'Playfair Display', serif",
-                  fontWeight: 700,
-                  fontSize: "var(--fs, 13vw)",
-                  color: "#1a1916",
-                }}
-              >
-                X
-              </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-cormorant), 'Cormorant Garamond', serif",
-                  fontStyle: "italic",
-                  fontWeight: 700,
-                  fontSize: "var(--fs, 13vw)",
-                  color: "#1a1916",
-                }}
-              >
-                BERRY
-              </span>
+              {["COASTAL", "X", "BERRY"].map((word) => (
+                <span
+                  key={word}
+                  style={{
+                    fontFamily: FUTURA,
+                    fontWeight: 700,
+                    fontSize: "var(--fs, 13vw)",
+                    color: "#1a1916",
+                  }}
+                >
+                  {word}
+                </span>
+              ))}
             </div>
           </motion.div>
 
