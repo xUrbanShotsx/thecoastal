@@ -152,11 +152,14 @@ export default function Home() {
       </div>
       {/* Second full-page section */}
       <section
-        className="flex h-screen w-full flex-col items-center justify-center px-8 text-center"
+        className="relative flex h-screen w-full flex-col items-center justify-center px-8 text-center"
         style={{ backgroundColor: "#cd4747" }}
       >
+        {/* Eyebrow — floated higher */}
         <p
+          className="absolute"
           style={{
+            top: "22%",
             fontFamily: FUTURA,
             fontWeight: 700,
             fontSize: "clamp(0.65rem, 1.2vw, 0.9rem)",
@@ -167,19 +170,24 @@ export default function Home() {
           GLAD YOU CAN JOIN US
         </p>
 
+        {/* Introduction — centred on page */}
         <p
-          className="mt-8 max-w-2xl"
+          className="max-w-3xl"
           style={{
             fontFamily: "Canela, serif",
             fontStyle: "italic",
             fontWeight: 300,
-            fontSize: "clamp(1.6rem, 3.2vw, 3rem)",
-            lineHeight: 1.35,
+            fontSize: "clamp(1.5rem, 2.8vw, 2.8rem)",
+            lineHeight: 1.4,
             color: "#ffc0c0",
           }}
         >
-          A private estate above Berry, New South Wales — where the bush
-          meets the coast and time slows to something worth keeping.
+          Tucked into the hills above Berry on the New South Wales South
+          Coast, The Coastal is a private estate of four stays — three
+          villas and a four-bedroom house, each one distinct, all of them
+          surrounded by bush, birdsong, and open sky. Come for the
+          stillness. Stay for the kind of quiet that only comes when
+          you&rsquo;ve properly left the city behind.
         </p>
       </section>
     </main>
