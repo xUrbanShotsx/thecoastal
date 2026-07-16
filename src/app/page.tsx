@@ -62,7 +62,7 @@ export default function Home() {
           {/* Cream panel */}
           <motion.div
             className="absolute inset-x-0 top-0 overflow-hidden"
-            style={{ height: creamHeight, backgroundColor: "#f5f0e8" }}
+            style={{ height: creamHeight, backgroundColor: "#ffc0c0" }}
           >
             {/* Centred title */}
             <div className="absolute inset-0 flex items-center justify-center">
