@@ -90,11 +90,11 @@ export default function Home() {
             </div>
 
             {/* Subtitle — bottom-right */}
-            <div className="absolute bottom-3 right-8 text-right">
+            <div className="absolute bottom-1 right-8 text-right">
               <p
                 style={{
                   fontFamily: "Canela, serif",
-                  fontSize: "clamp(1.6rem, 3vw, 2.8rem)",
+                  fontSize: "clamp(1.1rem, 2vw, 2rem)",
                   color: "#cd4747",
                   opacity: 0.75,
                   lineHeight: 1.35,
@@ -106,11 +106,11 @@ export default function Home() {
             </div>
 
             {/* Subtitle — bottom-left, just above the image */}
-            <div className="absolute bottom-3 left-8">
+            <div className="absolute bottom-1 left-8">
               <p
                 style={{
                   fontFamily: "Canela, serif",
-                  fontSize: "clamp(1.6rem, 3vw, 2.8rem)",
+                  fontSize: "clamp(1.1rem, 2vw, 2rem)",
                   color: "#cd4747",
                   opacity: 0.75,
                   lineHeight: 1.35,
