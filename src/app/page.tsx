@@ -1,16 +1,34 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Home() {
   const { scrollY } = useScroll();
-
-  // Cream panel gone by 500px of scroll (well before sticky breaks)
   const creamHeight = useTransform(scrollY, [0, 500], ["50vh", "0vh"]);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const fit = () => {
+      const el = titleRef.current;
+      if (!el) return;
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d")!;
+      // Measure at 100px then scale to viewport width
+      const family = getComputedStyle(el).fontFamily;
+      ctx.font = `bold 100px ${family}`;
+      const metrics = ctx.measureText("COASTAL X BERRY");
+      // Use actual ink bounds for true edge-to-edge
+      const inkWidth = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
+      el.style.fontSize = `${(window.innerWidth / inkWidth) * 100}px`;
+    };
+    document.fonts.ready.then(fit);
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
 
   return (
     <main>
-      {/* 200vh gives the image time to sit full-screen before user scrolls past */}
       <div className="relative h-[200vh]">
         <div className="sticky top-0 h-screen overflow-hidden">
 
@@ -23,25 +41,18 @@ export default function Home() {
             }}
           />
 
-          {/* Cream panel — slides up then gone */}
+          {/* Cream panel */}
           <motion.div
-            className="absolute inset-x-0 top-0 flex flex-col items-center justify-end overflow-hidden"
+            className="absolute inset-x-0 top-0 flex items-center justify-center overflow-hidden"
             style={{ height: creamHeight, backgroundColor: "#f5f0e8" }}
           >
-            <div className="pb-10 text-center">
-              <p
-                className="text-[10px] uppercase tracking-[0.35em]"
-                style={{ color: "#1a1916", opacity: 0.45 }}
-              >
-                Berry · New South Wales
-              </p>
-              <h1
-                className="mt-3 font-serif text-4xl font-normal tracking-wide sm:text-5xl"
-                style={{ color: "#1a1916" }}
-              >
-                The Coastal
-              </h1>
-            </div>
+            <h1
+              ref={titleRef}
+              className="whitespace-nowrap font-serif font-bold"
+              style={{ color: "#1a1916", fontSize: "13vw", lineHeight: 1 }}
+            >
+              COASTAL X BERRY
+            </h1>
           </motion.div>
 
         </div>
