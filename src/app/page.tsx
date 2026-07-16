@@ -150,7 +150,37 @@ export default function Home() {
         </div>
       </div>
       {/* Second full-page section */}
-      <div className="h-screen w-full" style={{ backgroundColor: "#cd4747" }} />
+      <section
+        className="flex h-screen w-full flex-col items-center justify-center px-8 text-center"
+        style={{ backgroundColor: "#cd4747" }}
+      >
+        <p
+          style={{
+            fontFamily: FUTURA,
+            fontWeight: 700,
+            fontSize: "clamp(0.65rem, 1.2vw, 0.9rem)",
+            letterSpacing: "0.22em",
+            color: "#ffc0c0",
+          }}
+        >
+          GLAD YOU CAN JOIN US
+        </p>
+
+        <p
+          className="mt-8 max-w-2xl"
+          style={{
+            fontFamily: "Canela, serif",
+            fontStyle: "italic",
+            fontWeight: 300,
+            fontSize: "clamp(1.6rem, 3.2vw, 3rem)",
+            lineHeight: 1.35,
+            color: "#ffc0c0",
+          }}
+        >
+          A private estate above Berry, New South Wales — where the bush
+          meets the coast and time slows to something worth keeping.
+        </p>
+      </section>
     </main>
   );
 }
