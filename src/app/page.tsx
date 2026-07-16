@@ -200,9 +200,14 @@ export default function Home() {
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className="w-full h-full"
-              style={{ backgroundColor: "#e8a0a0" }}
-            />
+              className="w-full h-full overflow-hidden"
+            >
+              <img
+                src={`/frame${i}.png`}
+                alt={`Frame ${i}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
           ))}
         </div>
       </section>
