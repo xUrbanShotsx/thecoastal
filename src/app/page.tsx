@@ -30,6 +30,8 @@ function scallop(W: number, H: number, nX: number, nY: number, a: number) {
 }
 
 const CW = 75, CH = 100, AMP = 6;
+const FB = 11; // timber frame border thickness (viewBox units)
+const WOOD = "#8a5c35"; // warm timber brown
 const SCALLOP = scallop(CW, CH, 5, 7, AMP);
 const VB = `${-AMP} ${-AMP} ${CW + AMP * 2} ${CH + AMP * 2}`;
 
@@ -234,11 +236,11 @@ export default function Home() {
           style={{ gap: "1.5rem" }}
         >
           {[
-            { n: 1, name: "The Headland House", slug: "the-headland-house" },
-            { n: 2, name: "The Eucalypt Villa", slug: "the-eucalypt-villa" },
-            { n: 3, name: "The Fern Villa", slug: "the-fern-villa" },
-            { n: 4, name: "The Paperbark Villa", slug: "the-paperbark-villa" },
-          ].map(({ n, name, slug }) => (
+            { n: 1, slug: "the-headland-house",   l1: "The Headland",  l2: "House" },
+            { n: 2, slug: "the-eucalypt-villa",   l1: "The Eucalypt",  l2: "Villa" },
+            { n: 3, slug: "the-fern-villa",        l1: "The Fern",      l2: "Villa" },
+            { n: 4, slug: "the-paperbark-villa",  l1: "The Paperbark", l2: "Villa" },
+          ].map(({ n, slug, l1, l2 }) => (
             <Link
               key={n}
               href={`/stays/${slug}`}
@@ -257,38 +259,47 @@ export default function Home() {
                     <path d={SCALLOP} />
                   </clipPath>
                 </defs>
-                {/* Photo */}
-                <image
-                  href={`/frame${n}.png`}
-                  x={-AMP} y={-AMP}
-                  width={CW + AMP * 2} height={CH + AMP * 2}
-                  clipPath={`url(#sc${n})`}
-                  preserveAspectRatio="xMidYMid slice"
-                />
-                {/* Shader — fades on hover */}
-                <rect
-                  x={-AMP} y={-AMP}
-                  width={CW + AMP * 2} height={CH + AMP * 2}
-                  clipPath={`url(#sc${n})`}
-                  fill="black"
-                  className="opacity-40 transition-opacity duration-700 group-hover:opacity-[0.05]"
-                />
+
+                <g clipPath={`url(#sc${n})`}>
+                  {/* Timber frame fill */}
+                  <rect
+                    x={-AMP} y={-AMP}
+                    width={CW + AMP * 2} height={CH + AMP * 2}
+                    fill={WOOD}
+                  />
+                  {/* Inset rectangular image */}
+                  <image
+                    href={`/frame${n}.png`}
+                    x={FB} y={FB}
+                    width={CW - FB * 2} height={CH - FB * 2}
+                    preserveAspectRatio="xMidYMid slice"
+                  />
+                  {/* Inner shadow at frame/image edge */}
+                  <rect
+                    x={FB} y={FB}
+                    width={CW - FB * 2} height={CH - FB * 2}
+                    fill="none"
+                    stroke="rgba(0,0,0,0.3)"
+                    strokeWidth={2}
+                  />
+                  {/* Shader over image — fades on hover */}
+                  <rect
+                    x={FB} y={FB}
+                    width={CW - FB * 2} height={CH - FB * 2}
+                    fill="black"
+                    className="opacity-35 transition-opacity duration-700 group-hover:opacity-[0.03]"
+                  />
+                  {/* Name — two lines inside image, bottom-left */}
+                  <text
+                    fontSize="6"
+                    style={{ fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300 }}
+                    fill="#ffc0c0"
+                  >
+                    <tspan x={FB + 3} y={CH - FB - 9}>{l1}</tspan>
+                    <tspan x={FB + 3} dy="7">{l2}</tspan>
+                  </text>
+                </g>
               </svg>
-              {/* Name label */}
-              <div className="absolute bottom-[12%] left-[8%]">
-                <p
-                  style={{
-                    fontFamily: "Canela, serif",
-                    fontStyle: "italic",
-                    fontWeight: 300,
-                    fontSize: "clamp(0.75rem, 1.1vw, 1.2rem)",
-                    color: "#ffc0c0",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  {name}
-                </p>
-              </div>
             </Link>
           ))}
         </div>
