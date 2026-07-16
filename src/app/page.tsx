@@ -80,7 +80,7 @@ export default function Home() {
                       : FUTURA,
                     fontWeight: 700,
                     fontSize: "var(--fs, 13vw)",
-                    color: "#1a1916",
+                    color: "#cd4747",
                   }}
                 >
                   {word}
@@ -95,7 +95,7 @@ export default function Home() {
                 style={{
                   fontFamily: "Canela, serif",
                   fontSize: "clamp(1.6rem, 3vw, 2.8rem)",
-                  color: "#1a1916",
+                  color: "#cd4747",
                   opacity: 0.75,
                   lineHeight: 1.35,
                 }}
@@ -111,7 +111,7 @@ export default function Home() {
                 style={{
                   fontFamily: "Canela, serif",
                   fontSize: "clamp(1.6rem, 3vw, 2.8rem)",
-                  color: "#1a1916",
+                  color: "#cd4747",
                   opacity: 0.75,
                   lineHeight: 1.35,
                 }}
