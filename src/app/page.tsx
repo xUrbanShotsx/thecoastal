@@ -6,6 +6,33 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 const FUTURA = "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif";
 
+// Generates a scalloped SVG path: bumps point outward on all 4 sides
+function scallop(W: number, H: number, nX: number, nY: number, a: number) {
+  const bw = W / nX, bh = H / nY, t = 0.25;
+  let d = `M 0 0 `;
+  for (let i = 0; i < nX; i++) {
+    const x = i * bw;
+    d += `C ${x + bw * t} ${-a} ${x + bw * (1 - t)} ${-a} ${x + bw} 0 `;
+  }
+  for (let i = 0; i < nY; i++) {
+    const y = i * bh;
+    d += `C ${W + a} ${y + bh * t} ${W + a} ${y + bh * (1 - t)} ${W} ${y + bh} `;
+  }
+  for (let i = 0; i < nX; i++) {
+    const x = W - i * bw;
+    d += `C ${x - bw * t} ${H + a} ${x - bw * (1 - t)} ${H + a} ${x - bw} ${H} `;
+  }
+  for (let i = 0; i < nY; i++) {
+    const y = H - i * bh;
+    d += `C ${-a} ${y - bh * t} ${-a} ${y - bh * (1 - t)} 0 ${y - bh} `;
+  }
+  return d + "Z";
+}
+
+const CW = 75, CH = 100, AMP = 6;
+const SCALLOP = scallop(CW, CH, 5, 7, AMP);
+const VB = `${-AMP} ${-AMP} ${CW + AMP * 2} ${CH + AMP * 2}`;
+
 export default function Home() {
   const { scrollY } = useScroll();
   const creamHeight = useTransform(scrollY, [0, 500], ["50vh", "0vh"]);
@@ -202,7 +229,10 @@ export default function Home() {
         className="h-screen w-full"
         style={{ backgroundColor: "#ffc0c0", padding: "1.25rem" }}
       >
-        <div className="grid h-full grid-cols-4 gap-5">
+        <div
+          className="grid grid-cols-4"
+          style={{ gap: "1.5rem" }}
+        >
           {[
             { n: 1, name: "The Headland House", slug: "the-headland-house" },
             { n: 2, name: "The Eucalypt Villa", slug: "the-eucalypt-villa" },
@@ -212,25 +242,46 @@ export default function Home() {
             <Link
               key={n}
               href={`/stays/${slug}`}
-              className="group relative w-full h-full overflow-hidden"
-              style={{ display: "block" }}
+              className="group relative block"
+              style={{ aspectRatio: `${CW + AMP * 2} / ${CH + AMP * 2}` }}
             >
-              {/* Image */}
-              <img
-                src={`/frame${n}.png`}
-                alt={name}
-                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.03]"
-              />
-              {/* Shader — fades on hover */}
-              <div className="absolute inset-0 bg-black/45 transition-opacity duration-700 group-hover:opacity-10" />
-              {/* Name — bottom left */}
-              <div className="absolute bottom-5 left-5">
+              <svg
+                viewBox={VB}
+                width="100%"
+                height="100%"
+                style={{ display: "block", overflow: "visible" }}
+                className="transition-transform duration-700 group-hover:scale-[1.02]"
+              >
+                <defs>
+                  <clipPath id={`sc${n}`}>
+                    <path d={SCALLOP} />
+                  </clipPath>
+                </defs>
+                {/* Photo */}
+                <image
+                  href={`/frame${n}.png`}
+                  x={-AMP} y={-AMP}
+                  width={CW + AMP * 2} height={CH + AMP * 2}
+                  clipPath={`url(#sc${n})`}
+                  preserveAspectRatio="xMidYMid slice"
+                />
+                {/* Shader — fades on hover */}
+                <rect
+                  x={-AMP} y={-AMP}
+                  width={CW + AMP * 2} height={CH + AMP * 2}
+                  clipPath={`url(#sc${n})`}
+                  fill="black"
+                  className="opacity-40 transition-opacity duration-700 group-hover:opacity-[0.05]"
+                />
+              </svg>
+              {/* Name label */}
+              <div className="absolute bottom-[12%] left-[8%]">
                 <p
                   style={{
                     fontFamily: "Canela, serif",
                     fontStyle: "italic",
                     fontWeight: 300,
-                    fontSize: "clamp(1rem, 1.4vw, 1.5rem)",
+                    fontSize: "clamp(0.75rem, 1.1vw, 1.2rem)",
                     color: "#ffc0c0",
                     lineHeight: 1.2,
                   }}
