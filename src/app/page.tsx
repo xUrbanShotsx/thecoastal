@@ -124,6 +124,8 @@ export default function Home() {
 
         </div>
       </div>
+      {/* Second full-page section */}
+      <div className="h-screen w-full" style={{ backgroundColor: "#ffc0c0" }} />
     </main>
   );
 }
