@@ -197,16 +197,36 @@ export default function Home() {
         style={{ backgroundColor: "#ffc0c0", padding: "1.25rem" }}
       >
         <div className="grid h-full grid-cols-4 gap-5">
-          {[1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              className="w-full h-full overflow-hidden"
-            >
+          {[
+            { n: 1, name: "The Headland House" },
+            { n: 2, name: "The Eucalypt Villa" },
+            { n: 3, name: "The Fern Villa" },
+            { n: 4, name: "The Paperbark Villa" },
+          ].map(({ n, name }) => (
+            <div key={n} className="group relative w-full h-full overflow-hidden">
+              {/* Image */}
               <img
-                src={`/frame${i}.png`}
-                alt={`Frame ${i}`}
-                className="w-full h-full object-cover"
+                src={`/frame${n}.png`}
+                alt={name}
+                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.03]"
               />
+              {/* Shader — fades on hover */}
+              <div className="absolute inset-0 bg-black/45 transition-opacity duration-700 group-hover:opacity-10" />
+              {/* Name — bottom left */}
+              <div className="absolute bottom-5 left-5">
+                <p
+                  style={{
+                    fontFamily: "Canela, serif",
+                    fontStyle: "italic",
+                    fontWeight: 300,
+                    fontSize: "clamp(1rem, 1.4vw, 1.5rem)",
+                    color: "#ffc0c0",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  {name}
+                </p>
+              </div>
             </div>
           ))}
         </div>
