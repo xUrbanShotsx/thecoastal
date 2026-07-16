@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Canela";
+  src: url("/fonts/Canela-LightItalic-Trial.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
 @theme inline {
   --color-cream: #f5f0e8;
   --color-ink: #1a1916;

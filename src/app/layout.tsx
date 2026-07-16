@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Playfair_Display, Cormorant_Garamond, Great_Vibes } from "next/font/google";
+import { Geist, Playfair_Display, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -20,12 +20,6 @@ const cormorant = Cormorant_Garamond({
   style: ["italic"],
 });
 
-const greatVibes = Great_Vibes({
-  variable: "--font-great-vibes",
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
 export const metadata: Metadata = {
   title: "The Coastal",
   description: "A private estate above Berry, NSW.",
@@ -37,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${playfair.variable} ${cormorant.variable} ${greatVibes.variable}`}>
+    <html lang="en" className={`${geistSans.variable} ${playfair.variable} ${cormorant.variable}`}>
       <body>{children}</body>
     </html>
   );

@@ -93,7 +93,7 @@ export default function Home() {
             <div className="absolute bottom-6 right-8 text-right">
               <p
                 style={{
-                  fontFamily: "var(--font-great-vibes), cursive",
+                  fontFamily: "Canela, serif",
                   fontSize: "clamp(1.6rem, 3vw, 2.8rem)",
                   color: "#1a1916",
                   opacity: 0.75,
@@ -109,7 +109,7 @@ export default function Home() {
             <div className="absolute bottom-6 left-8">
               <p
                 style={{
-                  fontFamily: "var(--font-great-vibes), cursive",
+                  fontFamily: "Canela, serif",
                   fontSize: "clamp(1.6rem, 3vw, 2.8rem)",
                   color: "#1a1916",
                   opacity: 0.75,
