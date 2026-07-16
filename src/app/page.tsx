@@ -61,9 +61,11 @@ export default function Home() {
 
           {/* Cream panel */}
           <motion.div
-            className="absolute inset-x-0 top-0 flex items-center justify-center overflow-hidden"
+            className="absolute inset-x-0 top-0 overflow-hidden"
             style={{ height: creamHeight, backgroundColor: "#f5f0e8" }}
           >
+            {/* Centred title */}
+            <div className="absolute inset-0 flex items-center justify-center">
             <div
               ref={heroRef}
               className="flex items-baseline whitespace-nowrap"
@@ -84,6 +86,23 @@ export default function Home() {
                   {word}
                 </span>
               ))}
+            </div>
+            </div>
+
+            {/* Subtitle — bottom-left, just above the image */}
+            <div className="absolute bottom-6 left-8">
+              <p
+                style={{
+                  fontFamily: "var(--font-great-vibes), cursive",
+                  fontSize: "clamp(1.6rem, 3vw, 2.8rem)",
+                  color: "#1a1916",
+                  opacity: 0.75,
+                  lineHeight: 1.35,
+                }}
+              >
+                Interiors, Objects
+                <br />& Atmospheres
+              </p>
             </div>
           </motion.div>
 
