@@ -8,6 +8,8 @@ const FUTURA = "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif";
 export default function Home() {
   const { scrollY } = useScroll();
   const creamHeight = useTransform(scrollY, [0, 500], ["50vh", "0vh"]);
+  const navOpacity = useTransform(scrollY, [0, 120], [1, 0]);
+  const navPointer = useTransform(scrollY, [0, 120], ["auto", "none"]);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -47,6 +49,29 @@ export default function Home() {
 
   return (
     <main>
+      {/* Navbar — fades out on scroll */}
+      <motion.nav
+        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-8 py-5"
+        style={{ opacity: navOpacity, pointerEvents: navPointer }}
+      >
+        {["EXPERIENCE", "ACCOMMODATION", "OUR STOREY"].map((item) => (
+          <a
+            key={item}
+            href="#"
+            style={{
+              fontFamily: FUTURA,
+              fontWeight: 700,
+              fontSize: "clamp(0.6rem, 1.1vw, 0.85rem)",
+              letterSpacing: "0.18em",
+              color: "#cd4747",
+              textDecoration: "none",
+            }}
+          >
+            {item}
+          </a>
+        ))}
+      </motion.nav>
+
       <div className="relative h-[200vh]">
         <div className="sticky top-0 h-screen overflow-hidden">
 
