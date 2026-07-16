@@ -237,6 +237,51 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Experiences section */}
+      <section
+        className="h-screen w-full flex flex-col"
+        style={{ backgroundColor: "#cd4747", padding: "1.25rem", gap: "1.25rem" }}
+      >
+        {/* Header row */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexShrink: 0 }}>
+          <div>
+            <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.22em", color: "#ffc0c0", opacity: 0.6, marginBottom: "0.4rem" }}>
+              EXPERIENCES
+            </p>
+            <h2 style={{ fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 3.5rem)", color: "#ffc0c0", lineHeight: 1 }}>
+              Berry & Beyond
+            </h2>
+          </div>
+          <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.18em", color: "#ffc0c0", opacity: 0.45, textTransform: "uppercase" }}>
+            THE SOUTH COAST, NSW
+          </p>
+        </div>
+
+        {/* Editorial image grid: 1 large left + 4 smaller right */}
+        <div
+          style={{
+            flex: 1,
+            display: "grid",
+            gridTemplateColumns: "2fr 1fr 1fr",
+            gridTemplateRows: "1fr 1fr",
+            gap: "1.25rem",
+            minHeight: 0,
+          }}
+        >
+          {/* Large left — spans both rows */}
+          <div style={{ gridRow: "span 2", position: "relative", overflow: "hidden", backgroundColor: "#b83c3c" }}>
+            <img src="/exp1.png" alt="Berry, NSW" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+
+          {/* 4 smaller images */}
+          {["/exp2.png", "/exp3.png", "/exp4.png", "/exp5.png"].map((src, i) => (
+            <div key={i} style={{ position: "relative", overflow: "hidden", backgroundColor: "#b83c3c" }}>
+              <img src={src} alt={`Berry experience ${i + 2}`} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }
