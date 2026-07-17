@@ -213,36 +213,39 @@ export default function Home() {
             <Link
               key={n}
               href={`/stays/${slug}`}
-              className="group relative block overflow-hidden"
+              className="group flex flex-col"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/frame${n}.png`}
-                alt={`${l1} ${l2}`}
-                style={{
-                  position: "absolute", inset: 0,
-                  width: "100%", height: "100%",
-                  objectFit: "cover",
-                  transition: "transform 0.7s ease",
-                }}
-                className="group-hover:scale-[1.04]"
-              />
-              {/* Dark shader fades on hover */}
-              <div
-                className="absolute inset-0 transition-opacity duration-700 opacity-40 group-hover:opacity-0"
-                style={{ background: "black" }}
-              />
-              {/* Name — bottom left */}
-              <div className="absolute bottom-5 left-5" style={{ zIndex: 2 }}>
+              {/* Image — top half of section */}
+              <div className="relative overflow-hidden" style={{ height: "50%" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/frame${n}.png`}
+                  alt={`${l1} ${l2}`}
+                  style={{
+                    position: "absolute", inset: 0,
+                    width: "100%", height: "100%",
+                    objectFit: "cover",
+                    transition: "transform 0.7s ease",
+                  }}
+                  className="group-hover:scale-[1.04]"
+                />
+                <div
+                  className="absolute inset-0 transition-opacity duration-700 opacity-30 group-hover:opacity-0"
+                  style={{ background: "black" }}
+                />
+              </div>
+
+              {/* Name — centred below image */}
+              <div className="flex flex-col items-center pt-5">
                 <p style={{
                   fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
-                  fontSize: "clamp(0.9rem, 1.3vw, 1.3rem)", color: "#ffc0c0", lineHeight: 1.2,
+                  fontSize: "clamp(1rem, 1.4vw, 1.4rem)", color: "#cd4747", lineHeight: 1.2,
                 }}>
                   {l1}
                 </p>
                 <p style={{
                   fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
-                  fontSize: "clamp(0.9rem, 1.3vw, 1.3rem)", color: "#ffc0c0", lineHeight: 1.2,
+                  fontSize: "clamp(1rem, 1.4vw, 1.4rem)", color: "#cd4747", lineHeight: 1.2,
                 }}>
                   {l2}
                 </p>
