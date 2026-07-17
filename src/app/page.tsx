@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 
 const FUTURA = "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif";
 
@@ -13,6 +13,14 @@ export default function Home() {
   const navOpacity = useTransform(scrollY, [0, 120], [1, 0]);
   const navPointer = useTransform(scrollY, [0, 120], ["auto", "none"]);
   const heroRef = useRef<HTMLDivElement>(null);
+
+  const EXP_IMAGES = ["/exp1.png", "/exp2.png", "/exp3.png"];
+  const [expIdx, setExpIdx] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setExpIdx((i) => (i + 1) % EXP_IMAGES.length), 5000);
+    return () => clearInterval(t);
+  }, []);
 
   useEffect(() => {
     const fit = () => {
@@ -266,47 +274,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Experiences section */}
-      <section
-        className="h-screen w-full flex flex-col"
-        style={{ backgroundColor: "#cd4747", padding: "1.25rem", gap: "1.25rem" }}
-      >
-        {/* Header row */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexShrink: 0 }}>
-          <div>
-            <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.22em", color: "#ffc0c0", opacity: 0.6, marginBottom: "0.4rem" }}>
-              EXPERIENCES
-            </p>
-            <h2 style={{ fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300, fontSize: "clamp(2rem, 3.5vw, 3.5rem)", color: "#ffc0c0", lineHeight: 1 }}>
-              Berry & Beyond
-            </h2>
-          </div>
-          <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.18em", color: "#ffc0c0", opacity: 0.45, textTransform: "uppercase" }}>
-            THE SOUTH COAST, NSW
+      {/* Experiences section — fullscreen slideshow */}
+      <section className="relative h-screen w-full overflow-hidden">
+        {/* Crossfading images */}
+        <AnimatePresence>
+          <motion.img
+            key={expIdx}
+            src={EXP_IMAGES[expIdx]}
+            alt="Berry & Beyond"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            style={{
+              position: "absolute", inset: 0,
+              width: "100%", height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </AnimatePresence>
+
+        {/* Dark vignette */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)" }} />
+
+        {/* Text overlay — bottom left */}
+        <div className="absolute bottom-0 left-0 p-10">
+          <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.22em", color: "#ffc0c0", opacity: 0.7, marginBottom: "0.6rem" }}>
+            EXPERIENCES
           </p>
+          <h2 style={{ fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300, fontSize: "clamp(2.5rem, 4.5vw, 5rem)", color: "#ffc0c0", lineHeight: 1 }}>
+            Berry &amp; Beyond
+          </h2>
         </div>
 
-        {/* Editorial image grid: 1 large left + 4 smaller right */}
-        <div
-          style={{
-            flex: 1,
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr",
-            gridTemplateRows: "1fr 1fr",
-            gap: "1.25rem",
-            minHeight: 0,
-          }}
-        >
-          {/* Large left — spans both rows */}
-          <div style={{ gridRow: "span 2", position: "relative", overflow: "hidden", backgroundColor: "#b83c3c" }}>
-            <img src="/exp1.png" alt="Berry, NSW" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
-
-          {/* 4 smaller images */}
-          {["/exp2.png", "/exp3.png", "/exp4.png", "/exp5.png"].map((src, i) => (
-            <div key={i} style={{ position: "relative", overflow: "hidden", backgroundColor: "#b83c3c" }}>
-              <img src={src} alt={`Berry experience ${i + 2}`} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
-            </div>
+        {/* Dot navigation — bottom right */}
+        <div className="absolute bottom-0 right-0 p-10 flex gap-2 items-center">
+          {EXP_IMAGES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setExpIdx(i)}
+              style={{
+                width: i === expIdx ? "1.8rem" : "0.45rem",
+                height: "0.45rem",
+                borderRadius: "9999px",
+                backgroundColor: "#ffc0c0",
+                opacity: i === expIdx ? 1 : 0.4,
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.4s ease",
+                padding: 0,
+              }}
+            />
           ))}
         </div>
       </section>
