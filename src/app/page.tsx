@@ -56,12 +56,13 @@ export default function Home() {
       const w3 = m3.actualBoundingBoxLeft + m3.actualBoundingBoxRight;
 
       const total = w1 + gap + w2 + gap + w3;
-      // 32px (px-8) each side = 64px total, matching navbar margin
-      const scale = (window.innerWidth - 64) / total;
+      const margin = 32;
+      const scale = (window.innerWidth - margin * 2) / total;
       const fs = base * scale;
 
       el.style.setProperty("--fs", `${fs}px`);
       el.style.setProperty("--gap", `${gap * scale}px`);
+      document.documentElement.style.setProperty("--nav-margin", `${margin}px`);
     };
 
     document.fonts.ready.then(fit);
@@ -73,8 +74,8 @@ export default function Home() {
     <main>
       {/* Navbar — fades out on scroll */}
       <motion.nav
-        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-8 py-5"
-        style={{ opacity: navOpacity, pointerEvents: navPointer }}
+        className="fixed inset-x-0 top-0 z-50 flex items-center justify-between"
+        style={{ opacity: navOpacity, pointerEvents: navPointer, padding: "1.25rem var(--nav-margin, 32px)" }}
       >
         {[
           { label: "EXPERIENCE", href: "#" },
