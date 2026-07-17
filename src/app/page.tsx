@@ -78,7 +78,7 @@ export default function Home() {
         style={{ opacity: navOpacity, pointerEvents: navPointer, padding: "1.25rem var(--nav-margin, 32px)" }}
       >
         {[
-          { label: "EXPERIENCE", href: "#" },
+          { label: "EXPERIENCE", href: "/experience" },
           { label: "ACCOMMODATION", href: "#accommodation" },
           { label: "OUR STOREY", href: "#" },
         ].map(({ label, href }) => (
