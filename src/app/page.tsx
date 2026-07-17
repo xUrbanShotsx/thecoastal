@@ -80,7 +80,7 @@ export default function Home() {
         {[
           { label: "EXPERIENCE", href: "/experience" },
           { label: "ACCOMMODATION", href: "#accommodation" },
-          { label: "OUR STOREY", href: "#" },
+          { label: "OUR STOREY", href: "/our-storey" },
         ].map(({ label, href }) => (
           <a
             key={label}
