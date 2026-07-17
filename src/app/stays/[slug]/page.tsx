@@ -180,42 +180,45 @@ export default async function StayPage({
         </div>
       </section>
 
-      {/* Section 2: 3×3 photo grid — fits one screen */}
-      <section
-        style={{
-          height: "100vh",
-          backgroundColor: "#ffc0c0",
-          padding: "1.25rem",
-        }}
-      >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gridTemplateRows: "repeat(3, 1fr)",
-            gap: "1.25rem",
-            height: "100%",
-          }}
-        >
-          {stay.photos.slice(0, 9).map((photo, i) => (
-            <div
-              key={i}
-              style={{ overflow: "hidden", position: "relative" }}
-            >
+      {/* Section 2: Editorial spread — large left + stacked right */}
+      <section style={{ height: "100vh", backgroundColor: "#ffc0c0", padding: "1.25rem", display: "flex", gap: "1.25rem" }}>
+        {/* Left — full-height hero */}
+        <div style={{ flex: "0 0 58%", position: "relative", overflow: "hidden" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={stay.photos[0]} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+        </div>
+        {/* Right — three stacked */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+          {[1, 2, 3].map((i) => (
+            <div key={i} style={{ flex: 1, position: "relative", overflow: "hidden" }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={photo}
-                alt={`${stay.name} photo ${i + 1}`}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
+              <img src={stay.photos[i]} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Section 3: Mosaic — two portrait + wide landscape */}
+      <section style={{ height: "100vh", backgroundColor: "#ffc0c0", padding: "1.25rem", display: "grid", gap: "1.25rem", gridTemplateColumns: "1fr 1fr 1fr", gridTemplateRows: "1fr 1fr" }}>
+        {/* Photo 5 — tall, spans 2 rows */}
+        <div style={{ gridColumn: "1", gridRow: "1 / 3", position: "relative", overflow: "hidden" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={stay.photos[4]} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+        </div>
+        {/* Photo 6 — top middle */}
+        <div style={{ gridColumn: "2", gridRow: "1", position: "relative", overflow: "hidden" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={stay.photos[5]} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+        </div>
+        {/* Photo 7 — top right */}
+        <div style={{ gridColumn: "3", gridRow: "1", position: "relative", overflow: "hidden" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={stay.photos[6]} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+        </div>
+        {/* Photo 8 + 9 — wide bottom spanning 2 cols */}
+        <div style={{ gridColumn: "2 / 4", gridRow: "2", position: "relative", overflow: "hidden" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={stay.photos[7]} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
         </div>
       </section>
     </main>
