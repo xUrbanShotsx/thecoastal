@@ -236,7 +236,7 @@ export default function Home() {
               </div>
 
               {/* Name and summary — centred below image */}
-              <div className="flex flex-col items-center pt-10 px-2" style={{ gap: "0.6rem" }}>
+              <div className="flex flex-col items-center px-2" style={{ gap: "0.6rem", marginTop: "2.5rem" }}>
                 <div className="flex flex-col items-center" style={{ lineHeight: 1.2 }}>
                   <p style={{
                     fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
