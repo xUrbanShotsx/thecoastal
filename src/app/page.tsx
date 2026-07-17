@@ -6,33 +6,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 const FUTURA = "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif";
 
-function scallop(W: number, H: number, nX: number, nY: number, a: number) {
-  const bw = W / nX, bh = H / nY, t = 0.25;
-  let d = `M 0 0 `;
-  for (let i = 0; i < nX; i++) {
-    const x = i * bw;
-    d += `C ${x + bw * t} ${-a} ${x + bw * (1 - t)} ${-a} ${x + bw} 0 `;
-  }
-  for (let i = 0; i < nY; i++) {
-    const y = i * bh;
-    d += `C ${W + a} ${y + bh * t} ${W + a} ${y + bh * (1 - t)} ${W} ${y + bh} `;
-  }
-  for (let i = 0; i < nX; i++) {
-    const x = W - i * bw;
-    d += `C ${x - bw * t} ${H + a} ${x - bw * (1 - t)} ${H + a} ${x - bw} ${H} `;
-  }
-  for (let i = 0; i < nY; i++) {
-    const y = H - i * bh;
-    d += `C ${-a} ${y - bh * t} ${-a} ${y - bh * (1 - t)} 0 ${y - bh} `;
-  }
-  return d + "Z";
-}
-
-const CW = 75, CH = 100, AMP = 6;
-const FB = 11;
-const WOOD = "#8a5c35";
-const SCALLOP = scallop(CW, CH, 5, 7, AMP);
-const VB = `${-AMP} ${-AMP} ${CW + AMP * 2} ${CH + AMP * 2}`;
 
 export default function Home() {
   const { scrollY } = useScroll();
@@ -224,13 +197,13 @@ export default function Home() {
         </p>
       </section>
 
-      {/* Four frames section */}
+      {/* Four stays section */}
       <section
         id="accommodation"
         className="h-screen w-full"
         style={{ backgroundColor: "#ffc0c0", padding: "1.25rem" }}
       >
-        <div className="grid grid-cols-4" style={{ gap: "1.5rem" }}>
+        <div className="grid grid-cols-4 h-full" style={{ gap: "1.5rem" }}>
           {[
             { n: 1, slug: "the-headland-house",  l1: "The Headland",  l2: "House" },
             { n: 2, slug: "the-eucalypt-villa",  l1: "The Eucalypt",  l2: "Villa" },
@@ -240,48 +213,40 @@ export default function Home() {
             <Link
               key={n}
               href={`/stays/${slug}`}
-              className="group relative block"
-              style={{ aspectRatio: `${CW + AMP * 2} / ${CH + AMP * 2}` }}
+              className="group relative block overflow-hidden"
             >
-              <svg
-                viewBox={VB}
-                width="100%"
-                height="100%"
-                style={{ display: "block", overflow: "visible" }}
-                className="transition-transform duration-700 group-hover:scale-[1.02]"
-              >
-                <defs>
-                  <clipPath id={`sc${n}`}>
-                    <path d={SCALLOP} />
-                  </clipPath>
-                </defs>
-                <g clipPath={`url(#sc${n})`}>
-                  <rect x={-AMP} y={-AMP} width={CW + AMP * 2} height={CH + AMP * 2} fill={WOOD} />
-                  <image
-                    href={`/frame${n}.png`}
-                    x={FB} y={FB}
-                    width={CW - FB * 2} height={CH - FB * 2}
-                    preserveAspectRatio="xMidYMid slice"
-                  />
-                  <rect
-                    x={FB} y={FB} width={CW - FB * 2} height={CH - FB * 2}
-                    fill="none" stroke="rgba(0,0,0,0.3)" strokeWidth={2}
-                  />
-                  <rect
-                    x={FB} y={FB} width={CW - FB * 2} height={CH - FB * 2}
-                    fill="black"
-                    className="opacity-35 transition-opacity duration-700 group-hover:opacity-[0.03]"
-                  />
-                  <text
-                    fontSize="6"
-                    style={{ fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300 }}
-                    fill="#ffc0c0"
-                  >
-                    <tspan x={FB + 3} y={CH - FB - 9}>{l1}</tspan>
-                    <tspan x={FB + 3} dy="7">{l2}</tspan>
-                  </text>
-                </g>
-              </svg>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`/frame${n}.png`}
+                alt={`${l1} ${l2}`}
+                style={{
+                  position: "absolute", inset: 0,
+                  width: "100%", height: "100%",
+                  objectFit: "cover",
+                  transition: "transform 0.7s ease",
+                }}
+                className="group-hover:scale-[1.04]"
+              />
+              {/* Dark shader fades on hover */}
+              <div
+                className="absolute inset-0 transition-opacity duration-700 opacity-40 group-hover:opacity-0"
+                style={{ background: "black" }}
+              />
+              {/* Name — bottom left */}
+              <div className="absolute bottom-5 left-5" style={{ zIndex: 2 }}>
+                <p style={{
+                  fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
+                  fontSize: "clamp(0.9rem, 1.3vw, 1.3rem)", color: "#ffc0c0", lineHeight: 1.2,
+                }}>
+                  {l1}
+                </p>
+                <p style={{
+                  fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
+                  fontSize: "clamp(0.9rem, 1.3vw, 1.3rem)", color: "#ffc0c0", lineHeight: 1.2,
+                }}>
+                  {l2}
+                </p>
+              </div>
             </Link>
           ))}
         </div>
