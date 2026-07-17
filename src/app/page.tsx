@@ -6,17 +6,33 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 const FUTURA = "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif";
 
-// Photo box + text position derived from frameborder{n}.png alpha measurements
-const FRAMES = [
-  { n: 1, slug: "the-headland-house", l1: "The Headland", l2: "House",
-    pt: 23,   pl: 30,   pw: 40,   ph: 55.7, tb: 23,   tl: 31   },
-  { n: 2, slug: "the-eucalypt-villa", l1: "The Eucalypt", l2: "Villa",
-    pt: 26.6, pl: 34.3, pw: 30.7, ph: 48.6, tb: 26.5, tl: 35   },
-  { n: 3, slug: "the-fern-villa",     l1: "The Fern",     l2: "Villa",
-    pt: 15.3, pl: 31.1, pw: 42.4, ph: 68.9, tb: 17,   tl: 32   },
-  { n: 4, slug: "the-paperbark-villa",l1: "The Paperbark",l2: "Villa",
-    pt: 19.6, pl: 30.6, pw: 43.6, ph: 61.9, tb: 20,   tl: 31.5 },
-];
+function scallop(W: number, H: number, nX: number, nY: number, a: number) {
+  const bw = W / nX, bh = H / nY, t = 0.25;
+  let d = `M 0 0 `;
+  for (let i = 0; i < nX; i++) {
+    const x = i * bw;
+    d += `C ${x + bw * t} ${-a} ${x + bw * (1 - t)} ${-a} ${x + bw} 0 `;
+  }
+  for (let i = 0; i < nY; i++) {
+    const y = i * bh;
+    d += `C ${W + a} ${y + bh * t} ${W + a} ${y + bh * (1 - t)} ${W} ${y + bh} `;
+  }
+  for (let i = 0; i < nX; i++) {
+    const x = W - i * bw;
+    d += `C ${x - bw * t} ${H + a} ${x - bw * (1 - t)} ${H + a} ${x - bw} ${H} `;
+  }
+  for (let i = 0; i < nY; i++) {
+    const y = H - i * bh;
+    d += `C ${-a} ${y - bh * t} ${-a} ${y - bh * (1 - t)} 0 ${y - bh} `;
+  }
+  return d + "Z";
+}
+
+const CW = 75, CH = 100, AMP = 6;
+const FB = 11;
+const WOOD = "#8a5c35";
+const SCALLOP = scallop(CW, CH, 5, 7, AMP);
+const VB = `${-AMP} ${-AMP} ${CW + AMP * 2} ${CH + AMP * 2}`;
 
 export default function Home() {
   const { scrollY } = useScroll();
@@ -211,73 +227,61 @@ export default function Home() {
       {/* Four frames section */}
       <section
         id="accommodation"
-        className="h-screen w-full flex items-center"
+        className="h-screen w-full"
         style={{ backgroundColor: "#ffc0c0", padding: "1.25rem" }}
       >
-        <div className="grid grid-cols-4 w-full" style={{ gap: "1.5rem" }}>
-          {FRAMES.map(({ n, slug, l1, l2, pt, pl, pw, ph, tb, tl }) => (
+        <div className="grid grid-cols-4" style={{ gap: "1.5rem" }}>
+          {[
+            { n: 1, slug: "the-headland-house",  l1: "The Headland",  l2: "House" },
+            { n: 2, slug: "the-eucalypt-villa",  l1: "The Eucalypt",  l2: "Villa" },
+            { n: 3, slug: "the-fern-villa",       l1: "The Fern",      l2: "Villa" },
+            { n: 4, slug: "the-paperbark-villa", l1: "The Paperbark", l2: "Villa" },
+          ].map(({ n, slug, l1, l2 }) => (
             <Link
               key={n}
               href={`/stays/${slug}`}
               className="group relative block"
-              style={{ aspectRatio: "1/1" }}
+              style={{ aspectRatio: `${CW + AMP * 2} / ${CH + AMP * 2}` }}
             >
-              {/* Stay photo inside the frame's inner area */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/frame${n}.png`}
-                alt=""
-                style={{
-                  position: "absolute",
-                  top: `${pt}%`, left: `${pl}%`,
-                  width: `${pw}%`, height: `${ph}%`,
-                  objectFit: "cover",
-                }}
-              />
-              {/* Dark shader that fades on hover */}
-              <div
-                className="absolute transition-opacity duration-700 opacity-[0.38] group-hover:opacity-[0.03]"
-                style={{
-                  top: `${pt}%`, left: `${pl}%`,
-                  width: `${pw}%`, height: `${ph}%`,
-                  background: "black",
-                  zIndex: 1,
-                }}
-              />
-              {/* Stay name — bottom-left of inner area */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: `${tb}%`, left: `${tl}%`,
-                  zIndex: 4,
-                  pointerEvents: "none",
-                }}
-              >
-                <p style={{
-                  fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
-                  fontSize: "clamp(0.6rem, 0.85vw, 0.85rem)", color: "#ffc0c0",
-                  lineHeight: 1.2, textShadow: "0 1px 4px rgba(0,0,0,0.5)",
-                }}>{l1}</p>
-                <p style={{
-                  fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
-                  fontSize: "clamp(0.6rem, 0.85vw, 0.85rem)", color: "#ffc0c0",
-                  lineHeight: 1.2, textShadow: "0 1px 4px rgba(0,0,0,0.5)",
-                }}>{l2}</p>
-              </div>
-              {/* Actual frame border PNG — transparent inner & outer, opaque timber ring */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/frameborder${n}.png`}
-                alt=""
+              <svg
+                viewBox={VB}
+                width="100%"
+                height="100%"
+                style={{ display: "block", overflow: "visible" }}
                 className="transition-transform duration-700 group-hover:scale-[1.02]"
-                style={{
-                  position: "absolute", inset: 0,
-                  width: "100%", height: "100%",
-                  objectFit: "contain",
-                  zIndex: 3,
-                  pointerEvents: "none",
-                }}
-              />
+              >
+                <defs>
+                  <clipPath id={`sc${n}`}>
+                    <path d={SCALLOP} />
+                  </clipPath>
+                </defs>
+                <g clipPath={`url(#sc${n})`}>
+                  <rect x={-AMP} y={-AMP} width={CW + AMP * 2} height={CH + AMP * 2} fill={WOOD} />
+                  <image
+                    href={`/frame${n}.png`}
+                    x={FB} y={FB}
+                    width={CW - FB * 2} height={CH - FB * 2}
+                    preserveAspectRatio="xMidYMid slice"
+                  />
+                  <rect
+                    x={FB} y={FB} width={CW - FB * 2} height={CH - FB * 2}
+                    fill="none" stroke="rgba(0,0,0,0.3)" strokeWidth={2}
+                  />
+                  <rect
+                    x={FB} y={FB} width={CW - FB * 2} height={CH - FB * 2}
+                    fill="black"
+                    className="opacity-35 transition-opacity duration-700 group-hover:opacity-[0.03]"
+                  />
+                  <text
+                    fontSize="6"
+                    style={{ fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300 }}
+                    fill="#ffc0c0"
+                  >
+                    <tspan x={FB + 3} y={CH - FB - 9}>{l1}</tspan>
+                    <tspan x={FB + 3} dy="7">{l2}</tspan>
+                  </text>
+                </g>
+              </svg>
             </Link>
           ))}
         </div>
