@@ -203,7 +203,7 @@ export default function Home() {
         className="h-screen w-full"
         style={{ backgroundColor: "#ffc0c0", padding: "1.25rem" }}
       >
-        <div className="grid grid-cols-4 h-full" style={{ gap: "1.5rem" }}>
+        <div className="grid grid-cols-4 h-full" style={{ gap: "1.5rem", paddingTop: "12vh" }}>
           {[
             { n: 1, slug: "the-headland-house",  l1: "The Headland",  l2: "House" },
             { n: 2, slug: "the-eucalypt-villa",  l1: "The Eucalypt",  l2: "Villa" },
