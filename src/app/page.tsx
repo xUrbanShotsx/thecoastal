@@ -380,12 +380,15 @@ export default function Home() {
           <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.18em", color: "#ffc0c0", opacity: 0.35 }}>
             © {new Date().getFullYear()} THE COASTAL. ALL RIGHTS RESERVED.
           </p>
-          <div style={{ display: "flex", gap: "2rem" }}>
+          <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
             {["Instagram", "Facebook"].map((s) => (
               <a key={s} href="#" style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.18em", color: "#ffc0c0", opacity: 0.35, textDecoration: "none" }}>
                 {s.toUpperCase()}
               </a>
             ))}
+            <a href="https://sanjstudio.com" target="_blank" rel="noopener noreferrer" style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.18em", color: "#ffc0c0", opacity: 0.35, textDecoration: "none" }}>
+              WEBSITE BY SANJSTUDIO
+            </a>
           </div>
         </div>
       </footer>
