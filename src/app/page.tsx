@@ -326,6 +326,69 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Footer */}
+      <footer style={{ backgroundColor: "#cd4747", padding: "5rem 4rem 3rem" }}>
+        {/* Top row — brand + nav */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "5rem" }}>
+          {/* Brand */}
+          <div>
+            <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "clamp(1.2rem, 2vw, 1.6rem)", letterSpacing: "0.18em", color: "#ffc0c0", marginBottom: "0.5rem" }}>
+              THE COASTAL
+            </p>
+            <p style={{ fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", color: "#ffc0c0", opacity: 0.65, lineHeight: 1.5 }}>
+              Berry, New South Wales
+            </p>
+          </div>
+
+          {/* Nav links */}
+          <div style={{ display: "flex", gap: "4rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.22em", color: "#ffc0c0", opacity: 0.45, marginBottom: "0.25rem" }}>STAYS</p>
+              {["The Headland House", "The Eucalypt Villa", "The Fern Villa", "The Paperbark Villa"].map((name) => (
+                <Link key={name} href={`/stays/${name.toLowerCase().replace(/\s+/g, "-")}`}
+                  style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.14em", color: "#ffc0c0", opacity: 0.7, textDecoration: "none" }}>
+                  {name.toUpperCase()}
+                </Link>
+              ))}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.22em", color: "#ffc0c0", opacity: 0.45, marginBottom: "0.25rem" }}>EXPLORE</p>
+              {["Experience", "Our Storey", "Accommodation"].map((label) => (
+                <a key={label} href="#"
+                  style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.14em", color: "#ffc0c0", opacity: 0.7, textDecoration: "none" }}>
+                  {label.toUpperCase()}
+                </a>
+              ))}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.22em", color: "#ffc0c0", opacity: 0.45, marginBottom: "0.25rem" }}>CONTACT</p>
+              <a href="mailto:hello@thecoastal.com.au"
+                style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.14em", color: "#ffc0c0", opacity: 0.7, textDecoration: "none" }}>
+                HELLO@THECOASTAL.COM.AU
+              </a>
+              <a href="tel:+61200000000"
+                style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.14em", color: "#ffc0c0", opacity: 0.7, textDecoration: "none" }}>
+                +61 2 0000 0000
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div style={{ borderTop: "1px solid rgba(255,192,192,0.2)", paddingTop: "2rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.18em", color: "#ffc0c0", opacity: 0.35 }}>
+            © {new Date().getFullYear()} THE COASTAL. ALL RIGHTS RESERVED.
+          </p>
+          <div style={{ display: "flex", gap: "2rem" }}>
+            {["Instagram", "Facebook"].map((s) => (
+              <a key={s} href="#" style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.18em", color: "#ffc0c0", opacity: 0.35, textDecoration: "none" }}>
+                {s.toUpperCase()}
+              </a>
+            ))}
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
