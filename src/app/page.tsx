@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const FUTURA = "'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif";
 
@@ -14,11 +14,22 @@ export default function Home() {
   const navPointer = useTransform(scrollY, [0, 120], ["auto", "none"]);
   const heroRef = useRef<HTMLDivElement>(null);
 
-  const EXP_IMAGES = ["/exp1.png", "/exp2.png", "/exp3.png"];
+  const EXP_IMAGES = ["/exp1.jpg", "/exp2.jpg", "/exp3.jpg"];
   const [expIdx, setExpIdx] = useState(0);
+  const prevExpIdx = useRef(-1);
+
+  const goTo = (next: number) => {
+    prevExpIdx.current = expIdx;
+    setExpIdx(next);
+  };
 
   useEffect(() => {
-    const t = setInterval(() => setExpIdx((i) => (i + 1) % EXP_IMAGES.length), 5000);
+    const t = setInterval(() => {
+      setExpIdx((i) => {
+        prevExpIdx.current = i;
+        return (i + 1) % EXP_IMAGES.length;
+      });
+    }, 5000);
     return () => clearInterval(t);
   }, []);
 
@@ -276,30 +287,30 @@ export default function Home() {
 
       {/* Experiences section — fullscreen wipe slideshow */}
       <section className="relative h-screen w-full overflow-hidden">
-        {/* All images stacked; new slide wipes in from right over the previous */}
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={expIdx}
-            initial={{ clipPath: "inset(0 100% 0 0)" }}
-            animate={{ clipPath: "inset(0 0% 0 0)" }}
-            transition={{ duration: 0.9, ease: [0.77, 0, 0.18, 1] }}
-            style={{ position: "absolute", inset: 0, zIndex: 1 }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={EXP_IMAGES[expIdx]}
-              alt=""
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </motion.div>
-        </AnimatePresence>
+        {/* All 3 images always rendered; current wipes in over prev, others stay hidden */}
+        {EXP_IMAGES.map((src, i) => {
+          const isCurrent = i === expIdx;
+          const isPrev = i === prevExpIdx.current;
+          return (
+            <motion.div
+              key={i}
+              initial={{ clipPath: i === 0 ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)" }}
+              animate={{ clipPath: isCurrent || isPrev ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)" }}
+              transition={{ duration: isCurrent ? 0.9 : 0, ease: [0.77, 0, 0.18, 1] }}
+              style={{ position: "absolute", inset: 0, zIndex: isCurrent ? 3 : isPrev ? 2 : 1 }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={src} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+            </motion.div>
+          );
+        })}
 
         {/* Dot navigation — bottom right */}
         <div className="absolute bottom-0 right-0 p-10 flex gap-2 items-center" style={{ zIndex: 10 }}>
           {EXP_IMAGES.map((_, i) => (
             <button
               key={i}
-              onClick={() => setExpIdx(i)}
+              onClick={() => goTo(i)}
               style={{
                 width: i === expIdx ? "1.8rem" : "0.45rem",
                 height: "0.45rem",
