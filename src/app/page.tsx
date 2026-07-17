@@ -336,9 +336,11 @@ export default function Home() {
             <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "clamp(1.2rem, 2vw, 1.6rem)", letterSpacing: "0.18em", color: "#ffc0c0", marginBottom: "0.5rem" }}>
               THE COASTAL
             </p>
-            <p style={{ fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", color: "#ffc0c0", opacity: 0.65, lineHeight: 1.5 }}>
+            <p style={{ fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300, fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", color: "#ffc0c0", opacity: 0.65, lineHeight: 1.5, marginBottom: "1.5rem" }}>
               Berry, New South Wales
             </p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/Logo123.png" alt="The Coastal" style={{ width: "clamp(80px, 10vw, 130px)", opacity: 0.75 }} />
           </div>
 
           {/* Nav links */}
