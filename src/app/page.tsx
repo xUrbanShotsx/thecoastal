@@ -205,11 +205,11 @@ export default function Home() {
       >
         <div className="grid grid-cols-4 h-full" style={{ gap: "1.5rem", paddingTop: "12vh" }}>
           {[
-            { n: 1, slug: "the-headland-house",  l1: "The Headland",  l2: "House" },
-            { n: 2, slug: "the-eucalypt-villa",  l1: "The Eucalypt",  l2: "Villa" },
-            { n: 3, slug: "the-fern-villa",       l1: "The Fern",      l2: "Villa" },
-            { n: 4, slug: "the-paperbark-villa", l1: "The Paperbark", l2: "Villa" },
-          ].map(({ n, slug, l1, l2 }) => (
+            { n: 1, slug: "the-headland-house",  l1: "The Headland",  l2: "House",   summary: "Four bedrooms, a heated pool, and open sky above Berry. The estate's gathering place." },
+            { n: 2, slug: "the-eucalypt-villa",  l1: "The Eucalypt",  l2: "Villa",   summary: "Set among old gums. High ceilings, a timber bathtub, and a private deck at dusk." },
+            { n: 3, slug: "the-fern-villa",       l1: "The Fern",      l2: "Villa",   summary: "Tucked into a fern gully. A private courtyard, wood fire, and slow morning light." },
+            { n: 4, slug: "the-paperbark-villa", l1: "The Paperbark", l2: "Villa",   summary: "The estate's most intimate stay. One bedroom, a stone fireplace, a deep stone bath." },
+          ].map(({ n, slug, l1, l2, summary }) => (
             <Link
               key={n}
               href={`/stays/${slug}`}
@@ -235,19 +235,30 @@ export default function Home() {
                 />
               </div>
 
-              {/* Name — centred below image */}
-              <div className="flex flex-col items-center pt-5">
+              {/* Name and summary — centred below image */}
+              <div className="flex flex-col items-center pt-10 px-2" style={{ gap: "0.6rem" }}>
+                <div className="flex flex-col items-center" style={{ lineHeight: 1.2 }}>
+                  <p style={{
+                    fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
+                    fontSize: "clamp(1rem, 1.4vw, 1.4rem)", color: "#cd4747",
+                  }}>
+                    {l1}
+                  </p>
+                  <p style={{
+                    fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
+                    fontSize: "clamp(1rem, 1.4vw, 1.4rem)", color: "#cd4747",
+                  }}>
+                    {l2}
+                  </p>
+                </div>
                 <p style={{
-                  fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
-                  fontSize: "clamp(1rem, 1.4vw, 1.4rem)", color: "#cd4747", lineHeight: 1.2,
+                  fontFamily: FUTURA, fontWeight: 400,
+                  fontSize: "clamp(0.55rem, 0.75vw, 0.72rem)",
+                  letterSpacing: "0.04em",
+                  color: "#cd4747", opacity: 0.65,
+                  textAlign: "center", lineHeight: 1.6,
                 }}>
-                  {l1}
-                </p>
-                <p style={{
-                  fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300,
-                  fontSize: "clamp(1rem, 1.4vw, 1.4rem)", color: "#cd4747", lineHeight: 1.2,
-                }}>
-                  {l2}
+                  {summary}
                 </p>
               </div>
             </Link>
