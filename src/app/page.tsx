@@ -274,41 +274,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Experiences section — fullscreen slideshow */}
+      {/* Experiences section — fullscreen wipe slideshow */}
       <section className="relative h-screen w-full overflow-hidden">
-        {/* Crossfading images */}
-        <AnimatePresence>
-          <motion.img
+        {/* All images stacked; new slide wipes in from right over the previous */}
+        <AnimatePresence initial={false}>
+          <motion.div
             key={expIdx}
-            src={EXP_IMAGES[expIdx]}
-            alt="Berry & Beyond"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-            style={{
-              position: "absolute", inset: 0,
-              width: "100%", height: "100%",
-              objectFit: "cover",
-            }}
-          />
+            initial={{ clipPath: "inset(0 100% 0 0)" }}
+            animate={{ clipPath: "inset(0 0% 0 0)" }}
+            transition={{ duration: 0.9, ease: [0.77, 0, 0.18, 1] }}
+            style={{ position: "absolute", inset: 0, zIndex: 1 }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={EXP_IMAGES[expIdx]}
+              alt=""
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </motion.div>
         </AnimatePresence>
 
-        {/* Dark vignette */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 50%, transparent 100%)" }} />
-
-        {/* Text overlay — bottom left */}
-        <div className="absolute bottom-0 left-0 p-10">
-          <p style={{ fontFamily: FUTURA, fontWeight: 700, fontSize: "0.65rem", letterSpacing: "0.22em", color: "#ffc0c0", opacity: 0.7, marginBottom: "0.6rem" }}>
-            EXPERIENCES
-          </p>
-          <h2 style={{ fontFamily: "Canela, serif", fontStyle: "italic", fontWeight: 300, fontSize: "clamp(2.5rem, 4.5vw, 5rem)", color: "#ffc0c0", lineHeight: 1 }}>
-            Berry &amp; Beyond
-          </h2>
-        </div>
-
         {/* Dot navigation — bottom right */}
-        <div className="absolute bottom-0 right-0 p-10 flex gap-2 items-center">
+        <div className="absolute bottom-0 right-0 p-10 flex gap-2 items-center" style={{ zIndex: 10 }}>
           {EXP_IMAGES.map((_, i) => (
             <button
               key={i}
@@ -318,7 +305,7 @@ export default function Home() {
                 height: "0.45rem",
                 borderRadius: "9999px",
                 backgroundColor: "#ffc0c0",
-                opacity: i === expIdx ? 1 : 0.4,
+                opacity: i === expIdx ? 1 : 0.5,
                 border: "none",
                 cursor: "pointer",
                 transition: "all 0.4s ease",
